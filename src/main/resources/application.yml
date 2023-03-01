@@ -1,0 +1,12 @@
+#spring.jpa.show_sql=true
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MYSQL5InnoDBDialect
+#spring.h2.console.enabled=true
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  h2:
+    console:
+      enabled: true
