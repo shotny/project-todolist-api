@@ -9,14 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import shotny.ToDoListapi.bucket.dto.BucketRequestDto;
+import shotny.ToDoListapi.todos.Todo;
+import shotny.ToDoListapi.todos.TodoRepository;
+import shotny.ToDoListapi.todos.dto.TodoRequestDto;
+
+import java.util.List;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BucketRepositoryTest {
 
-    @Autowired
-    BucketRepository bucketRepository;
+    @Autowired BucketRepository bucketRepository;
+    @Autowired TodoRepository todoRepository;
 
     @After
     public void cleanAll() {
@@ -67,4 +72,5 @@ public class BucketRepositoryTest {
         Assertions.assertThat(saved.getId()).isEqualTo(1);
         Assertions.assertThat(saved.getBucketName()).isEqualTo("new Bucket1");
     }
+
 }

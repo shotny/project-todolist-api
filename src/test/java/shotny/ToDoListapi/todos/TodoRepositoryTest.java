@@ -7,14 +7,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import shotny.ToDoListapi.bucket.Bucket;
+import shotny.ToDoListapi.bucket.BucketRepository;
+import shotny.ToDoListapi.bucket.dto.BucketRequestDto;
+import shotny.ToDoListapi.todos.dto.TodoRequestDto;
 
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TodoRepositoryTest {
-    @Autowired
-    TodoRepository todoRepository;
+    @Autowired TodoRepository todoRepository;
+    @Autowired BucketRepository bucketRepository;
 
     @After
     public void cleanup() {
@@ -104,5 +108,63 @@ public class TodoRepositoryTest {
 
         //then
         Assertions.assertThat(todoRepository.findAll().size()).isEqualTo(1);
+    }
+
+
+    // 버킷에 포함된 리스트 전체 조회
+    @Test
+    public void 리스트조회() {
+        // given
+        BucketRequestDto bucketRequest = new BucketRequestDto("new Bucket1");
+        Bucket savedBucket = bucketRepository.save(bucketRequest.toEntity());
+
+        Todo save1 = todoRepository.save(new TodoRequestDto("add 1st list").toEntity());
+        save1.saveBucket(savedBucket);
+
+        Todo save2  = todoRepository.save(new TodoRequestDto("add 2nd list").toEntity());
+        save2.saveBucket(savedBucket);
+
+        todoRepository.save(save1);
+        todoRepository.save(save2);
+
+        //when
+        List<Todo> todoList = todoRepository.findByBucketId(savedBucket.getId());
+
+        //then
+        Assertions.assertThat(todoList.size()).isEqualTo(2);
+
+    }
+
+    // UNCOMPLETED 리스트 조회
+    @Test
+    public void uncompleted리스트조회() {
+        // given
+        BucketRequestDto bucketRequest = new BucketRequestDto("new Bucket1");
+        Bucket savedBucket = bucketRepository.save(bucketRequest.toEntity());
+
+        Todo save1 = todoRepository.save(new TodoRequestDto("add 1st list").toEntity());
+        save1.saveBucket(savedBucket);
+        save1.updateCompleted();
+
+        Todo save2  = todoRepository.save(new TodoRequestDto("add 2nd list").toEntity());
+        save2.saveBucket(savedBucket);
+
+        Todo save3  = todoRepository.save(new TodoRequestDto("add 3rd list").toEntity());
+        save3.saveBucket(savedBucket);
+
+        todoRepository.save(save1);
+        todoRepository.save(save2);
+        todoRepository.save(save3);
+
+        //when
+        List<Todo> todoList = todoRepository.findByBucketId(savedBucket.getId());
+        List<Todo> uncompletedList = todoRepository.findByCompletedAndBucketId(false, savedBucket.getId());
+        List<Todo> completedList = todoRepository.findByCompletedAndBucketId(true, savedBucket.getId());
+
+        //then
+        Assertions.assertThat(todoList.size()).isEqualTo(3);
+        Assertions.assertThat(uncompletedList.size()).isEqualTo(2);
+        Assertions.assertThat(completedList.size()).isEqualTo(1);
+        Assertions.assertThat(completedList.get(0).getContent()).isEqualTo("add 1st list");
     }
 }

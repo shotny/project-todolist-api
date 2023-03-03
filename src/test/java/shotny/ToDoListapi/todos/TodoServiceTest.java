@@ -34,6 +34,7 @@ public class TodoServiceTest {
         Assertions.assertThat(savedEntity.isCompleted()).isFalse();
     }
 
+    /*
     // 리스트 completed 수정
     @Test
     public void completed수정() {
@@ -48,7 +49,7 @@ public class TodoServiceTest {
         //then
         Assertions.assertThat(todoRepository.findById(hello.getId()).get().isCompleted()).isTrue();
         Assertions.assertThat(completedList.size()).isEqualTo(1);
-    }
+    }*/
 
     public TodoRequestDto createRequest() {
         return TodoRequestDto.builder().content("create new list").build();

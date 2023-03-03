@@ -34,12 +34,26 @@ public class Todo extends BaseTimeEntity {
         this.content = toDo;
     }
 
-    public void updateCompleted() {
+    public Boolean updateCompleted() {
         if (this.completed == false) {
             this.completed = true;
+            return true;
         } else {
             this.completed = false;
+            return false;
         }
+    }
+
+//    public void updateCompleted() {
+//        if (this.completed == false) {
+//            this.completed = true;
+//        } else {
+//            this.completed = false;
+//        }
+//    }
+
+    public void saveBucket(Bucket bucket) {
+        this.bucket = bucket;
     }
 
     @Builder

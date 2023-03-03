@@ -10,19 +10,13 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class BucketResponseDto {
+public class BucketCreateResponseDto {
 
     private Long id;
     private String bucketName;
-    private int listCount;
-    private int completedCount;
-    private LocalDateTime createdAt;
 
-    public BucketResponseDto(Bucket entity) {
+    public BucketCreateResponseDto(Bucket entity) {
         this.id = entity.getId();
         this.bucketName = entity.getBucketName();
-        this.listCount = entity.getListCount();
-        this.completedCount = entity.getCompletedCount();
-        this.createdAt = entity.getModifiedAt();
     }
 }

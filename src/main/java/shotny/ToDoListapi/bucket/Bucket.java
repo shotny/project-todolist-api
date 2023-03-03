@@ -42,16 +42,31 @@ public class Bucket extends BaseTimeEntity {
     }
 
 
-    public void addCount() {
-        this.listCount++;
+    public void countUp() {
+        ++ this.listCount;
     }
 
-
-    public void updateCompleted(boolean completed) {
-        if (completed == true) {
-            this.completedCount++;
-        } else {
-            this.completedCount--;
+    public void countDown() {
+        if (this.listCount > 0) {
+            -- this.listCount;
         }
     }
+
+    public void completedUp() {
+        ++this.completedCount;
+    }
+
+    public void completedDown() {
+        if (this.completedCount > 0) {
+            --this.completedCount;
+        }
+    }
+
+//    public void updateCompleted(boolean completed) {
+//        if (completed == true) {
+//            this.completedCount++;
+//        } else {
+//            this.completedCount--;
+//        }
+//    }
 }
