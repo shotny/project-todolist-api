@@ -1,9 +1,6 @@
 package shotny.ToDoListapi.todos.dto;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import shotny.ToDoListapi.todos.Todo;
 
 import java.time.LocalDateTime;
@@ -16,6 +13,7 @@ public class TodoResponseDto {
     private boolean completed;
     private LocalDateTime createdAt;
 
+    @Builder
     public TodoResponseDto(Todo entity) {
         this.id = entity.getId();
         this.content = entity.getContent();

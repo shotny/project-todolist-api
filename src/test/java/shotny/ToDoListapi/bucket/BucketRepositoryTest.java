@@ -3,17 +3,12 @@ package shotny.ToDoListapi.bucket;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import shotny.ToDoListapi.bucket.dto.BucketRequestDto;
-import shotny.ToDoListapi.todos.Todo;
 import shotny.ToDoListapi.todos.TodoRepository;
-import shotny.ToDoListapi.todos.dto.TodoRequestDto;
-
-import java.util.List;
 
 
 @RunWith(SpringRunner.class)
@@ -39,7 +34,7 @@ public class BucketRepositoryTest {
         Bucket savedBucket = bucketRepository.save(bucket);
 
         //then
-        Assertions.assertThat(savedBucket.getBucketName()).isEqualTo(requestDto.getBucketName());
+        Assertions.assertThat(savedBucket.getName()).isEqualTo(requestDto.getName());
     }
 
     // 버킷 이름
@@ -55,7 +50,7 @@ public class BucketRepositoryTest {
         bucketRepository.save(saved);
 
         //then
-        Assertions.assertThat(bucketRepository.findById(savedId).get().getBucketName()).isEqualTo("update bucket name");
+        Assertions.assertThat(bucketRepository.findById(savedId).get().getName()).isEqualTo("update bucket name");
     }
 
     // 버킷 조회
@@ -70,7 +65,7 @@ public class BucketRepositoryTest {
 
         //then
         Assertions.assertThat(saved.getId()).isEqualTo(1);
-        Assertions.assertThat(saved.getBucketName()).isEqualTo("new Bucket1");
+        Assertions.assertThat(saved.getName()).isEqualTo("new Bucket1");
     }
 
 }

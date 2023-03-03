@@ -1,6 +1,7 @@
 package shotny.ToDoListapi.bucket.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shotny.ToDoListapi.bucket.Bucket;
@@ -9,11 +10,11 @@ import shotny.ToDoListapi.bucket.Bucket;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BucketRequestDto {
-    private String bucketName;
+    private String name;
 
     public Bucket toEntity() {
         return Bucket.builder()
-                .title(bucketName)
+                .name(name)
                 .build();
     }
 }

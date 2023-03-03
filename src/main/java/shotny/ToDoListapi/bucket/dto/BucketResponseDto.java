@@ -1,27 +1,27 @@
 package shotny.ToDoListapi.bucket.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import shotny.ToDoListapi.bucket.Bucket;
-import shotny.ToDoListapi.todos.Todo;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
 public class BucketResponseDto {
 
     private Long id;
-    private String bucketName;
-    private int listCount;
+    private String name;
+    private int count;
     private int completedCount;
     private LocalDateTime createdAt;
 
+    @Builder
     public BucketResponseDto(Bucket entity) {
         this.id = entity.getId();
-        this.bucketName = entity.getBucketName();
-        this.listCount = entity.getListCount();
+        this.name = entity.getName();
+        this.count = entity.getCount();
         this.completedCount = entity.getCompletedCount();
         this.createdAt = entity.getModifiedAt();
     }

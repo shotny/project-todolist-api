@@ -20,12 +20,14 @@ public class TodoService {
 
     @Transactional
     public TodoResponseDto saveList(Long bucketId, TodoRequestDto requestDto) {
-        Todo entity = todoRepository.save(requestDto.toEntity());
-        entity.saveBucket(bucketRepository.findById(bucketId).get());
+        // bucketId 존재하는지 검증 필요
 
         Bucket bucket = bucketRepository.findById(bucketId).get();
         bucket.countUp();
         bucketRepository.save(bucket);
+
+        Todo entity = todoRepository.save(requestDto.toEntity());
+        entity.saveBucket(bucket);
 
         return new TodoResponseDto(entity);
     }
@@ -36,6 +38,9 @@ public class TodoService {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 목록이 없습니다 id= " + id));
         todo.updateTodo(requestDto.getContent());
+        if (todo.isCompleted()) {
+            todo.updateCompleted();
+        }
         return new TodoResponseDto(todoRepository.save(todo));
     }
 
@@ -69,11 +74,4 @@ public class TodoService {
         bucketRepository.save(bucket);
     }
 
-    //  ---- 버킷 연동 전 ----
-    // 리스트 등록
-    @Transactional
-    public TodoResponseDto saveList(TodoRequestDto requestDto) {
-        Todo entity = todoRepository.save(requestDto.toEntity());
-        return new TodoResponseDto(entity);
-    }
 }

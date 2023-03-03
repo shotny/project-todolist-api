@@ -20,10 +20,10 @@ public class Bucket extends BaseTimeEntity {
     private Long id;
 
     @Column
-    private String bucketName;
+    private String name;
 
     @Column
-    private int listCount;
+    private int count;
 
     @Column
     private int completedCount;
@@ -33,22 +33,21 @@ public class Bucket extends BaseTimeEntity {
 
 
     @Builder
-    public Bucket(String title) {
-        this.bucketName = title;
+    public Bucket(String name) {
+        this.name = name;
     }
 
     public void updateName(String bucketName) {
-        this.bucketName = bucketName;
+        this.name = bucketName;
     }
 
-
     public void countUp() {
-        ++ this.listCount;
+        ++this.count;
     }
 
     public void countDown() {
-        if (this.listCount > 0) {
-            -- this.listCount;
+        if (this.count > 0) {
+            -- this.count;
         }
     }
 
@@ -61,12 +60,4 @@ public class Bucket extends BaseTimeEntity {
             --this.completedCount;
         }
     }
-
-//    public void updateCompleted(boolean completed) {
-//        if (completed == true) {
-//            this.completedCount++;
-//        } else {
-//            this.completedCount--;
-//        }
-//    }
 }
